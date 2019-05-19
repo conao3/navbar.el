@@ -33,7 +33,7 @@
 
 (defconst navbar-version "0.1.0")
 
-(eval-when-compile (require 'cl-lib))
+(require 'cl-lib)
 
 ;;; Customization
 
