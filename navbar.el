@@ -325,7 +325,7 @@ Disabled items are ignored."
       (setq strings (navbar--expand-glues
 		     values strings (get-buffer-window buffer))))
     (with-current-buffer buffer
-      (let (deactivate-mark)
+      (let ((deactivate-mark))
 	(erase-buffer)
 	(insert (apply #'concat strings))))))
 
@@ -344,7 +344,7 @@ Disabled items are ignored."
   "Initialize `navbar-item-alist' and add functions to hooks,
 Also, this runs :initialize functions without updating the navbar buffer."
   (navbar-deinitialize)
-  (let (item-alist)
+  (let ((item-alist))
     (dolist (item navbar-item-list)
       (when (functionp item)
 	(setq item (funcall item)))
@@ -356,7 +356,7 @@ Also, this runs :initialize functions without updating the navbar buffer."
 	(dolist (pair hooks)
 	  (add-hook (car pair) (cdr pair)))))
     (setq navbar-item-alist (nreverse item-alist))
-    (let (func)
+    (let ((func))
       (dolist (item (mapcar #'cdr navbar-item-alist))
         (setq func (plist-get item :initialize))
         (when (and func (navbar--item-enabled-p item))
