@@ -396,17 +396,17 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     map)
   "Keymap ignoring all mouse events.")
 
-(defun navbar-buffer-name (&optional frame)
+(defun navbar-get-buffer-name (&optional frame)
   (let ((string (prin1-to-string (or frame (selected-frame)))))
     ;; Match the frame address in core
     (string-match " \\([^ ]+\\)>\\'" string)
     (concat " *navbar " (match-string 1 string) "*")))
 
 (defun navbar-buffer (&optional frame)
-  (get-buffer (navbar-buffer-name frame)))
+  (get-buffer (navbar-get-buffer-name frame)))
 
 (defun navbar-buffer-create (&optional frame)
-  (let* ((name (navbar-buffer-name frame))
+  (let* ((name (navbar-get-buffer-name frame))
 	 (buffer (get-buffer name)))
     (unless buffer
       (setq buffer (get-buffer-create name))
@@ -439,7 +439,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
       window)))
 
 (defun navbar-window (&optional frame)
-  (get-buffer-window (navbar-buffer-name frame) frame))
+  (get-buffer-window (navbar-get-buffer-name frame) frame))
 
 (defun navbar-kill-buffer-and-window (&optional frame)
   (unless frame
