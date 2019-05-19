@@ -187,10 +187,10 @@ DOC is a doc string for function ITEM.
 	       ,@hooks
 	       ,@(nreverse extra-keywords))))))
 
-(defun navbar-item-value-get (key)
-  "Return KEY's :value property value."
-  (plist-get (cdr (assq key navbar-item-alist))
-	     :value))
+;; (defun navbar-item-value-get (key)
+;;   "Return KEY's :value property value."
+;;   (plist-get (cdr (assq key navbar-item-alist))
+;; 	     :value))
 
 ;; (defun navbar-item-enabled-p (key)
 ;;   "Return non-nil if KEY's item is enabled."
