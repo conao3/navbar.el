@@ -380,9 +380,9 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 
 ;;; GUI
 
-(defun navbar-property-at (point prop window)
-  (with-selected-window window
-    (get-text-property point prop)))
+;; (defun navbar-property-at (point prop window)
+;;   (with-selected-window window
+;;     (get-text-property point prop)))
 
 (defvar navbar-base-map
   (let ((map (make-sparse-keymap)))
