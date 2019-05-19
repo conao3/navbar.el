@@ -472,10 +472,11 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     ad-return-value))
 
 (defun navbar-advices-teardown ()
-  (dolist (func '(next-window window-list))
-    ;; Ignore already removed advices
-    (ignore-errors (ad-remove-advice func 'around 'navbar-ignore))
-    (ad-update func)))
+  (mapc (lambda (fn)
+          ;; Ignore already removed advices
+          (ignore-errors (ad-remove-advice fn 'around 'navbar-ignore))
+          (ad-update fn))
+        '(next-window window-list)))
 
 ;;; Minor mode
 
