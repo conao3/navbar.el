@@ -331,9 +331,7 @@ Disabled items are ignored."
 
 (defun navbar-update (&optional frame)
   "Update navbar of FRAME."
-  (unless frame
-    (setq frame (selected-frame)))
-  (with-selected-frame frame
+  (with-selected-frame (or frame (selected-frame))
     (funcall navbar-display-function
 	     (mapcar #'cdr navbar-item-alist)
 	     (navbar-buffer frame))))
