@@ -192,10 +192,10 @@ DOC is a doc string for function ITEM.
   (plist-get (cdr (assq key navbar-item-alist))
 	     :value))
 
-(defun navbar-item-enabled-p (key)
-  "Return non-nil if KEY's item is enabled."
-  (navbar--item-enabled-p
-   (cdr (assq key navbar-item-alist))))
+;; (defun navbar-item-enabled-p (key)
+;;   "Return non-nil if KEY's item is enabled."
+;;   (navbar--item-enabled-p
+;;    (cdr (assq key navbar-item-alist))))
 
 (defun navbar--item-enabled-p (item)
   (or (not (plist-member item :enable))
