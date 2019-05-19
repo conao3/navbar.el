@@ -334,7 +334,7 @@ Disabled items are ignored."
   (with-selected-frame (or frame (selected-frame))
     (funcall navbar-display-function
 	     (mapcar #'cdr navbar-item-alist)
-	     (navbar-buffer frame))))
+	     (navbar-get-buffer frame))))
 
 (defun navbar--funcall-with-no-display (function &rest arguments)
   (let ((navbar-display-function #'ignore))
@@ -402,10 +402,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     (string-match " \\([^ ]+\\)>\\'" string)
     (concat " *navbar " (match-string 1 string) "*")))
 
-(defun navbar-buffer (&optional frame)
-  (get-buffer (navbar-get-buffer-name frame)))
-
-(defun navbar-buffer-create (&optional frame)
+(defun navbar-get-buffer (&optional frame)
   (let* ((name (navbar-get-buffer-name frame))
 	 (buffer (get-buffer name)))
     (unless buffer
@@ -428,7 +425,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 
 (defun navbar-make-window (&optional frame)
   (with-selected-frame (or frame (selected-frame))
-    (let* ((buffer (navbar-buffer-create frame))
+    (let* ((buffer (navbar-get-buffer frame))
 	   (window (display-buffer-in-side-window
 		    buffer '((side . top) (window-height . 1)))))
       (set-window-fringes window 0 0)
@@ -445,7 +442,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (unless frame
     (setq frame (selected-frame)))
   (let ((window (navbar-window frame))
-	(buffer (navbar-buffer frame)))
+	(buffer (navbar-get-buffer frame)))
     (when window
       (delete-side-window window))
     (when buffer
