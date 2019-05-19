@@ -353,7 +353,7 @@ Also, this runs :initialize functions without updating the navbar buffer."
       (let ((key (plist-get item :key))
 	    (hooks (plist-get item :hooks)))
 	(push (cons key item) item-alist)
-        (mapc (lambda (pair) (add-hook (car pair) (cdr pair))) hooks)))
+        (mapc (lambda (hook) (add-hook (car hook) (cdr hook))) hooks)))
     (mapc (lambda (item)
             (let ((fn (plist-get item :initialize)))
               (when (and fn (navbar--item-enabled-p item))
@@ -367,7 +367,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (dolist (item (mapcar 'cdr navbar-item-alist))
     (let ((hooks (plist-get item :hooks))
 	  (func (plist-get item :deinitialize)))
-      (mapc (lambda (pair) (remove-hook (car pair) (cdr pair))) hooks)
+      (mapc (lambda (hook) (remove-hook (car hook) (cdr hook))) hooks)
       (when func
 	(navbar--funcall-with-no-display func))))
   (setq navbar-item-alist nil))
