@@ -442,30 +442,32 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 
 ;;; Advices
 
-(defun navbar-advices-setup ()
-  (defadvice next-window (around navbar-ignore activate)
-    (let ((first-window (or (ad-get-arg 0) (selected-window))))
-      ad-do-it
-      (while (and (not (eq ad-return-value first-window))
-		  (window-parameter ad-return-value 'navbar-get-window))
-	(ad-set-arg 0 ad-return-value)
-	ad-do-it))
-    ad-return-value)
+(defvar navbar-advice-list '((next-window . navbar-advice-next-window)
+                             (window-list . navbar-advice-window-list)))
 
-  (defadvice window-list (around navbar-ignore activate)
-    ad-do-it
-    (setq ad-return-value
-	  (cl-loop for window in ad-return-value
-		   unless (window-parameter window 'navbar-get-window)
-		   collect window))
-    ad-return-value))
+(defun navbar-advice-next-window (fn &rest args)
+  (let* ((ret (apply fn args)))
+    (while (string-match " \\*navbar " (buffer-name (window-buffer ret)))
+      (setq ret (apply fn `(elm (nth 1 args) (nth 2 args)))))
+    ret))
+
+(defun navbar-advice-window-list (fn &rest args)
+  (delq nil
+        (mapcar
+         (lambda (elm)
+           (unless (string-match " \\*navbar " (buffer-name (window-buffer elm)))
+             elm))
+         (window-list))))
+
+(defun navbar-advices-setup ()
+  (mapc (lambda (pair)
+          (eval `(advice-add ',(car pair) :around ',(cdr pair))))
+        navbar-advice-list))
 
 (defun navbar-advices-teardown ()
-  (mapc (lambda (fn)
-          ;; Ignore already removed advices
-          (ignore-errors (ad-remove-advice fn 'around 'navbar-ignore))
-          (ad-update fn))
-        '(next-window window-list)))
+  (mapc (lambda (pair)
+          (eval `(advice-remove ',(car pair) ',(cdr pair))))
+        navbar-advice-list))
 
 ;;; Minor mode
 
