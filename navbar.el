@@ -427,9 +427,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   "Display table for navbar.el.")
 
 (defun navbar-make-window (&optional frame)
-  (unless frame
-    (setq frame (selected-frame)))
-  (with-selected-frame frame
+  (with-selected-frame (or frame (selected-frame))
     (let* ((buffer (navbar-buffer-create frame))
 	   (window (display-buffer-in-side-window
 		    buffer '((side . top) (window-height . 1)))))
