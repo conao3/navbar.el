@@ -423,7 +423,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     table)
   "Display table for navbar.el.")
 
-(defun navbar-make-window (&optional frame)
+(defun navbar-get-window (&optional frame)
   (with-selected-frame (or frame (selected-frame))
     (let* ((buffer (navbar-get-buffer frame))
 	   (window (display-buffer-in-side-window
@@ -432,16 +432,14 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
       (set-window-display-table window navbar-display-table)
       (set-window-parameter window 'delete-window 'ignore)
       (set-window-parameter window 'no-other-window t)
-      (set-window-parameter window 'navbar-window t)
-      window)))
-
-(defun navbar-window (&optional frame)
+      (set-window-parameter window 'navbar-get-window t)
+      window))
   (get-buffer-window (navbar-get-buffer-name frame) frame))
 
 (defun navbar-kill-buffer-and-window (&optional frame)
   (unless frame
     (setq frame (selected-frame)))
-  (let ((window (navbar-window frame))
+  (let ((window (navbar-get-window frame))
 	(buffer (navbar-get-buffer frame)))
     (when window
       (delete-side-window window))
@@ -455,7 +453,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     (let ((first-window (or (ad-get-arg 0) (selected-window))))
       ad-do-it
       (while (and (not (eq ad-return-value first-window))
-		  (window-parameter ad-return-value 'navbar-window))
+		  (window-parameter ad-return-value 'navbar-get-window))
 	(ad-set-arg 0 ad-return-value)
 	ad-do-it))
     ad-return-value)
@@ -464,7 +462,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     ad-do-it
     (setq ad-return-value
 	  (cl-loop for window in ad-return-value
-		   unless (window-parameter window 'navbar-window)
+		   unless (window-parameter window 'navbar-get-window)
 		   collect window))
     ad-return-value))
 
@@ -509,7 +507,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 (defun navbar-revive-workaround ()
   (with-eval-after-load 'revive
     (defun revive:window-list ()
-      (window-list nil 'no-minibuf (navbar-window)))
+      (window-list nil 'no-minibuf (navbar-get-window)))
     (defun construct-window-configuration (edgelist)
       (delete-other-windows)
       (revive:restore-winconf
