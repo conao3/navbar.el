@@ -342,13 +342,6 @@ Disabled items are ignored."
   (let ((navbar-display-function #'ignore))
     (apply #'funcall function arguments)))
 
-(defun navbar--run-initialize ()
-  (let (func)
-    (dolist (item (mapcar #'cdr navbar-item-alist))
-      (setq func (plist-get item :initialize))
-      (when (and func (navbar--item-enabled-p item))
-	(navbar--funcall-with-no-display func)))))
-
 (defun navbar-initialize ()
   "Initialize `navbar-item-alist' and add functions to hooks,
 Also, this runs :initialize functions without updating the navbar buffer."
@@ -365,7 +358,11 @@ Also, this runs :initialize functions without updating the navbar buffer."
 	(dolist (pair hooks)
 	  (add-hook (car pair) (cdr pair)))))
     (setq navbar-item-alist (nreverse item-alist))
-    (navbar--run-initialize)))
+    (let (func)
+      (dolist (item (mapcar #'cdr navbar-item-alist))
+        (setq func (plist-get item :initialize))
+        (when (and func (navbar--item-enabled-p item))
+          (navbar--funcall-with-no-display func))))))
 
 (defun navbar-deinitialize ()
   "Remove functions from hooks and clean up `navbar-item-alist'.
