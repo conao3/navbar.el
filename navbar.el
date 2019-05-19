@@ -250,14 +250,6 @@ to concatenate the elements of the list."
     (concat (navbar--item-value-serialize (car value))
 	    (navbar--item-value-serialize (cdr value))))))
 
-(defun navbar--item-value-atom-p (value)
-  (or (stringp value) (keywordp (cadr value))))
-
-(defun navbar--item-value-normalize (value)
-  (if (navbar--item-value-atom-p value)
-      (list value)
-    value))
-
 (defun navbar--item-serialize (item)
   "Convert ITEM to a string if possible.
 If an item value is a symbol, the symbol is returned as is.
@@ -268,7 +260,9 @@ they are concatenated with `navbar-item-separator'."
 	value
       (apply #'navbar--item-propertize
 	     (mapconcat #'navbar--item-value-serialize
-			(navbar--item-value-normalize value)
+                        (if (or (stringp value) (keywordp (cadr value)))
+                            (list value)
+                          value)
 			navbar-item-separator)
 	     item))))
 
