@@ -459,12 +459,12 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
              elm))
          (window-list))))
 
-(defun navbar-advices-setup ()
+(defun navbar-advice-add ()
   (mapc (lambda (pair)
           (eval `(advice-add ',(car pair) :around ',(cdr pair))))
         navbar-advice-list))
 
-(defun navbar-advices-teardown ()
+(defun navbar-advices-remove ()
   (mapc (lambda (pair)
           (eval `(advice-remove ',(car pair) ',(cdr pair))))
         navbar-advice-list))
@@ -472,7 +472,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 ;;; Minor mode
 
 (defun navbar-setup ()
-  (navbar-advices-setup)
+  (navbar-advice-add)
   (add-hook 'after-make-frame-functions #'navbar-update)
   (add-hook 'after-make-frame-functions #'navbar-make-window)
   (add-hook 'window-size-change-functions #'navbar-update)
@@ -483,7 +483,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 
 (defun navbar-teardown ()
   (navbar-deinitialize)
-  (navbar-advices-teardown)
+  (navbar-advices-remove)
   (remove-hook 'after-make-frame-functions #'navbar-update)
   (remove-hook 'after-make-frame-functions #'navbar-make-window)
   (remove-hook 'window-size-change-functions #'navbar-update)
