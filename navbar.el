@@ -457,11 +457,11 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
          (lambda (elm)
            (unless (string-match " \\*navbar " (buffer-name (window-buffer elm)))
              elm))
-         (window-list))))
+         (apply fn args))))
 
 (defun navbar-advice-add ()
   (mapc (lambda (pair)
-          (eval `(advice-add ',(car pair) :around ',(cdr pair))))
+          (eval `(advice-add ',(car pair) :around #',(cdr pair))))
         navbar-advice-list))
 
 (defun navbar-advices-remove ()
