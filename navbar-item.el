@@ -28,7 +28,6 @@
 (require 'time)
 (require 'format-spec)
 (require 'mew)
-(require 'elscreen)
 
 
 ;;; version
@@ -139,6 +138,17 @@
 ;; * `elscreen-tab-current-screen-face'
 ;; * `elscreen-tab-other-screen-face'
 ;; * `elscreen-tab-display-kill-screen'
+
+(defvar elscreen-tab-display-kill-screen)
+(declare-function elscreen-kill "elscreen")
+(declare-function elscreen-kill-screen-and-buffers "elscreen")
+(declare-function elscreen-goto "elscreen")
+(declare-function elscreen-screen-modified-p "elscreen")
+(declare-function elscreen-get-screen-list "elscreen")
+(declare-function elscreen-get-screen-to-name-alist "elscreen")
+(declare-function elscreen-get-current-screen "elscreen")
+(declare-function elscreen-get-previous-screen "elscreen")
+(declare-function elscreen-tab-display-kill-screen "elscreen")
 
 (defcustom navbar-item-elscreen-tab-truncate 16
   "Width to truncate the tab body."
