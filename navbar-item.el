@@ -241,12 +241,6 @@ The following characters are replaced:
      screen-list)))
 
 (defun navbar-item-elscreen-on ()
-  (if elscreen-frame-confs
-      (navbar-item-elscreen--on)
-    (defadvice elscreen-start (after navbar-item-elscreen-start activate)
-      (navbar-item-elscreen--on))))
-
-(defun navbar-item-elscreen--on ()
   (remove-hook 'elscreen-screen-update-hook 'elscreen-tab-update)
   (add-hook 'elscreen-screen-update-hook #'navbar-item-elscreen-update)
   ;; When `elscreen-start' is run after `navbar-mode' is enabled,
@@ -261,10 +255,6 @@ The following characters are replaced:
   (navbar-item-elscreen-update 'force))
 
 (defun navbar-item-elscreen-off ()
-  (ignore-errors
-    (ad-remove-advice 'elscreen-start 'after 'navbar-item-elscreen-start)
-    (ad-update 'elscreen-start))
-
   (add-hook 'elscreen-screen-update-hook 'elscreen-tab-update)
   (remove-hook 'elscreen-screen-update-hook #'navbar-item-elscreen-update))
 
