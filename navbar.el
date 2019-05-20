@@ -450,6 +450,18 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
     (when buffer
       (kill-buffer buffer))))
 
+(defun navbar-frame-list ()
+  "Return `frame-list', except child-frame.
+
+Ref: 29.14 Child Frames
+  To create a new child frame or to convert a normal frame
+  into a child frame, set that frame's parent-frame parameter"
+  (delq nil
+        (mapcar (lambda (frame)
+                  (unless (frame-parameter frame 'parent-frame)
+                    frame))
+                (frame-list))))
+
 ;;; Advices
 
 (defvar navbar-advice-list '((next-window . navbar-advice-next-window)
@@ -486,9 +498,9 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (add-hook 'after-make-frame-functions #'navbar-update)
   (add-hook 'after-make-frame-functions #'navbar-get-window)
   (add-hook 'window-size-change-functions #'navbar-update)
-  (mapc #'navbar-get-window (frame-list))
+  (mapc #'navbar-get-window (navbar-frame-list))
   (navbar-initialize)
-  (mapc #'navbar-update (frame-list))
+  (mapc #'navbar-update (navbar-frame-list))
   (font-lock-add-keywords 'emacs-lisp-mode navbar-font-lock-keywords))
 
 (defun navbar-teardown ()
@@ -497,7 +509,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (remove-hook 'after-make-frame-functions #'navbar-update)
   (remove-hook 'after-make-frame-functions #'navbar-get-window)
   (remove-hook 'window-size-change-functions #'navbar-update)
-  (mapc 'navbar-kill-buffer-and-window (frame-list))
+  (mapc 'navbar-kill-buffer-and-window (navbar-frame-list))
   (font-lock-remove-keywords 'emacs-lisp-mode navbar-font-lock-keywords))
 
 ;;;###autoload
