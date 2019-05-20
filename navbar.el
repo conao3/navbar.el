@@ -95,6 +95,10 @@ a buffer."
           (ignore-window-parameters t))
       (delete-window window))))
 
+(defun navbar-property-at (point prop window)
+  (with-selected-window window
+    (get-text-property point prop)))
+
 ;;; Features
 
 (defvar navbar-item-alist nil)
@@ -383,10 +387,6 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (navbar-update))
 
 ;;; GUI
-
-;; (defun navbar-property-at (point prop window)
-;;   (with-selected-window window
-;;     (get-text-property point prop)))
 
 (defvar navbar-base-map
   (let ((map (make-sparse-keymap)))
