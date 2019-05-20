@@ -85,6 +85,16 @@ a buffer."
      (1 font-lock-keyword-face)
      (2 font-lock-function-name-face nil t))))
 
+;;; Polyfills
+
+(unless (fboundp 'delete-side-window)
+  (defun delete-side-window (window)
+    "Delete side window WINDOW."
+    (let ((window-combination-resize
+           (window-parameter (window-parent window) 'window-side))
+          (ignore-window-parameters t))
+      (delete-window window))))
+
 ;;; Features
 
 (defvar navbar-item-alist nil)
