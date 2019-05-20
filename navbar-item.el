@@ -1,4 +1,4 @@
-;;; navbar-items.el --- items for navbar.el  -*- lexical-binding: t; -*-
+;;; navbar-item.el --- item for navbar.el  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  papaeye
 
@@ -276,5 +276,5 @@ The following characters are replaced:
   :initialize #'navbar-item-elscreen-on
   :deinitialize #'navbar-item-elscreen-off)
 
-(provide 'navbar-items)
-;;; navbar-items.el ends here
+(provide 'navbar-item)
+;;; navbar-item.el ends here
