@@ -33,16 +33,16 @@
 
 ;;; version
 
-(defface navbarx-version
+(defface navbar-item-version
   '((t :inherit navbar-item))
-  "Face of `navbarx-version'."
+  "Face of `navbar-item-version'."
   :group 'navbar)
 
-(navbar-define-item navbarx-version
+(navbar-define-item navbar-item-version
   "Navbar item for `navbar-version'."
   :value (propertize
 	  "\u00bb\u00bb"
-	  'face 'navbarx-version
+	  'face 'navbar-item-version
 	  'help-echo (concat "navbar " navbar-version)))
 
 
@@ -51,81 +51,81 @@
 ;; This navbar item displays `display-time-string' in the navbar buffer
 ;; instead of the mode line.
 
-(defface navbarx-time
+(defface navbar-item-time
   '((t :inherit navbar-item))
-  "Face of `navbarx-time'."
+  "Face of `navbar-item-time'."
   :group 'navbar)
 
-(defun navbarx-time-get ()
+(defun navbar-item-time-get ()
   (and display-time-string
        (list (substring-no-properties display-time-string)
 	     :padding navbar-item-padding
-	     :propertize '(face navbarx-time))))
+	     :propertize '(face navbar-item-time))))
 
-(defun navbarx-time-on ()
+(defun navbar-item-time-on ()
   (setq global-mode-string
 	(delq 'display-time-string global-mode-string))
-  (add-hook 'display-time-hook #'navbarx-time-update)
+  (add-hook 'display-time-hook #'navbar-item-time-update)
   (display-time-update))
 
-(defun navbarx-time-off ()
-  (navbarx-time-update)
-  (remove-hook 'display-time-hook #'navbarx-time-update))
+(defun navbar-item-time-off ()
+  (navbar-item-time-update)
+  (remove-hook 'display-time-hook #'navbar-item-time-update))
 
-;;;###autoload (autoload 'navbarx-time "navbarx-time")
-(navbar-define-item navbarx-time
+;;;###autoload (autoload 'navbar-item-time "navbar-item-time")
+(navbar-define-item navbar-item-time
   "Navbar item for `display-time-mode' support."
-  :get #'navbarx-time-get
+  :get #'navbar-item-time-get
   :mode display-time-mode
-  :mode-on #'navbarx-time-on
-  :mode-off #'navbarx-time-off)
+  :mode-on #'navbar-item-time-on
+  :mode-off #'navbar-item-time-off)
 
 
 ;;; mew
 
-(defface navbarx-mew
+(defface navbar-item-mew
   '((t :inherit navbar-item))
-  "Face of `navbarx-mew'."
+  "Face of `navbar-item-mew'."
   :group 'navbar)
 
-(defvar navbarx-mew-biff-function-original nil)
+(defvar navbar-item-mew-biff-function-original nil)
 
-(defun navbarx-mew-biff-function (n)
-  (funcall navbarx-mew-biff-function-original n)
-  (navbarx-mew-update))
+(defun navbar-item-mew-biff-function (n)
+  (funcall navbar-item-mew-biff-function-original n)
+  (navbar-item-mew-update))
 
-(defun navbarx-mew-get ()
+(defun navbar-item-mew-get ()
   (and mew-biff-string
        (list mew-biff-string
 	     :padding-left navbar-item-padding
-	     :propertize '(face navbarx-mew))))
+	     :propertize '(face navbar-item-mew))))
 
-(defun navbarx-mew-delete-mode-string ()
+(defun navbar-item-mew-delete-mode-string ()
   (setq global-mode-string
 	(assq-delete-all 'mew-biff-string global-mode-string)))
 
-(defun navbarx-mew-on ()
-  (setq navbarx-mew-biff-function-original mew-biff-function)
-  (setq mew-biff-function #'navbarx-mew-biff-function)
-  (add-hook 'mew-status-update-hook #'navbarx-mew-delete-mode-string)
-  (add-hook 'mew-pop-sentinel-hook #'navbarx-mew-update)
-  (add-hook 'mew-imap-sentinel-hook #'navbarx-mew-update))
+(defun navbar-item-mew-on ()
+  (setq navbar-item-mew-biff-function-original mew-biff-function)
+  (setq mew-biff-function #'navbar-item-mew-biff-function)
+  (add-hook 'mew-status-update-hook #'navbar-item-mew-delete-mode-string)
+  (add-hook 'mew-pop-sentinel-hook #'navbar-item-mew-update)
+  (add-hook 'mew-imap-sentinel-hook #'navbar-item-mew-update))
 
-(defun navbarx-mew-off ()
-  (setq mew-biff-function navbarx-mew-biff-function-original)
-  (remove-hook 'mew-status-update-hook #'navbarx-mew-delete-mode-string)
-  (remove-hook 'mew-pop-sentinel-hook #'navbarx-mew-update)
-  (remove-hook 'mew-imap-sentinel-hook #'navbarx-mew-update))
+(defun navbar-item-mew-off ()
+  (setq mew-biff-function navbar-item-mew-biff-function-original)
+  (remove-hook 'mew-status-update-hook #'navbar-item-mew-delete-mode-string)
+  (remove-hook 'mew-pop-sentinel-hook #'navbar-item-mew-update)
+  (remove-hook 'mew-imap-sentinel-hook #'navbar-item-mew-update))
 
-;;;###autoload (autoload 'navbarx-mew "navbarx-mew")
-(navbar-define-item navbarx-mew
+;;;###autoload (autoload 'navbar-item-mew "navbar-item-mew")
+(navbar-define-item navbar-item-mew
   "Navbar item for Mew support."
   :enable mew-init-p
-  :get #'navbarx-mew-get
-  :initialize #'navbarx-mew-on
-  :deinitialize #'navbarx-mew-off
-  :hooks (list (cons 'mew-init-hook #'navbarx-mew-on)
-	       (cons 'mew-quit-hook #'navbarx-mew-off)))
+  :get #'navbar-item-mew-get
+  :initialize #'navbar-item-mew-on
+  :deinitialize #'navbar-item-mew-off
+  :hooks (list (cons 'mew-init-hook #'navbar-item-mew-on)
+	       (cons 'mew-quit-hook #'navbar-item-mew-off)))
 
 
 ;;; elscreen
@@ -140,12 +140,12 @@
 ;; * `elscreen-tab-other-screen-face'
 ;; * `elscreen-tab-display-kill-screen'
 
-(defcustom navbarx-elscreen-tab-truncate 16
+(defcustom navbar-item-elscreen-tab-truncate 16
   "Width to truncate the tab body."
   :type 'integer
   :group 'navbar)
 
-(defcustom navbarx-elscreen-tab-body-format
+(defcustom navbar-item-elscreen-tab-body-format
   (concat "%s\u00bb" navbar-item-padding "%n")
   "String to be formatted using `format-spec' and shown in the tab body.
 
@@ -155,56 +155,56 @@ The following characters are replaced:
   :type 'string
   :group 'elscreen)
 
-(defface navbarx-elscreen-tab-previous-screen
+(defface navbar-item-elscreen-tab-previous-screen
   '((t :inherit elscreen-tab-other-screen-face))
   "Face for the previous screen."
   :group 'navbar)
 
-(defun navbarx-elscreen-screen-command (command)
+(defun navbar-item-elscreen-screen-command (command)
   (lambda (event)
     (interactive "e")
     (let* ((position (event-start event))
 	   (point (posn-point position))
 	   (window (posn-window position))
-	   (screen (navbar-property-at point 'navbarx-elscreen-screen window)))
+	   (screen (navbar-property-at point 'navbar-item-elscreen-screen window)))
       (funcall command screen))))
 
-(defun navbarx-elscreen-kill-screen-help (window _object pos)
-  (let ((screen (navbar-property-at pos 'navbarx-elscreen-screen window)))
+(defun navbar-item-elscreen-kill-screen-help (window _object pos)
+  (let ((screen (navbar-property-at pos 'navbar-item-elscreen-screen window)))
     (format
      "mouse-1: kill screen %d, M-mouse-1: kill screen %d and buffers on it"
      screen screen)))
 
-(defvar navbarx-elscreen-kill-screen-map
+(defvar navbar-item-elscreen-kill-screen-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "<mouse-1>") (navbarx-elscreen-screen-command
+    (define-key map (kbd "<mouse-1>") (navbar-item-elscreen-screen-command
 				       'elscreen-kill))
-    (define-key map (kbd "M-<mouse-1>") (navbarx-elscreen-screen-command
+    (define-key map (kbd "M-<mouse-1>") (navbar-item-elscreen-screen-command
 					 'elscreen-kill-screen-and-buffers))
     map))
 
-(defvar navbarx-elscreen-tab-body-map
+(defvar navbar-item-elscreen-tab-body-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "<mouse-1>") (navbarx-elscreen-screen-command
+    (define-key map (kbd "<mouse-1>") (navbar-item-elscreen-screen-command
 				       'elscreen-goto))
     map))
 
-(defvar navbarx-elscreen-kill-screen
+(defvar navbar-item-elscreen-kill-screen
   (concat (propertize "[\u00d7]"
-		      'keymap navbarx-elscreen-kill-screen-map
-		      'help-echo 'navbarx-elscreen-kill-screen-help)
+		      'keymap navbar-item-elscreen-kill-screen-map
+		      'help-echo 'navbar-item-elscreen-kill-screen-help)
 	  ;; Reset the keymap for the right item
 	  (propertize " " 'display '(space :width 0))))
 
-(defun navbarx-elscreen-get (&optional force)
+(defun navbar-item-elscreen-get (&optional force)
   (if (and (not (window-minibuffer-p))
 	   ;; The order is significant
-	   (or (elscreen-screen-modified-p 'navbarx-elscreen-get)
+	   (or (elscreen-screen-modified-p 'navbar-item-elscreen-get)
 	       force))
-      (navbarx-elscreen--get)
+      (navbar-item-elscreen--get)
     'unchanged))
 
-(defun navbarx-elscreen--get ()
+(defun navbar-item-elscreen--get ()
   (let ((screen-list (sort (elscreen-get-screen-list) '<))
 	(screen-to-name-alist (elscreen-get-screen-to-name-alist))
 	(current-screen (elscreen-get-current-screen))
@@ -217,64 +217,64 @@ The following characters are replaced:
 			 ((= screen current-screen)
 			  'elscreen-tab-current-screen-face)
 			 ((= screen previous-screen)
-			  'navbarx-elscreen-tab-previous-screen)
+			  'navbar-item-elscreen-tab-previous-screen)
 			 (t
 			  'elscreen-tab-other-screen-face)))
-	      (tab-body (list (format-spec navbarx-elscreen-tab-body-format
+	      (tab-body (list (format-spec navbar-item-elscreen-tab-body-format
 					   `((?s . ,screen)
 					     (?n . ,screen-name)))
-			      :truncate navbarx-elscreen-tab-truncate
+			      :truncate navbar-item-elscreen-tab-truncate
 			      :propertize
 			      (list 'help-echo screen-name
-				    'keymap navbarx-elscreen-tab-body-map)
+				    'keymap navbar-item-elscreen-tab-body-map)
 			      :padding navbar-item-padding)))
 	 (list (cond
 		((not elscreen-tab-display-kill-screen)
 		 (list tab-body))
 		((eq elscreen-tab-display-kill-screen 'right)
-		 (list tab-body navbarx-elscreen-kill-screen))
+		 (list tab-body navbar-item-elscreen-kill-screen))
 		(t
-		 (list navbarx-elscreen-kill-screen tab-body)))
+		 (list navbar-item-elscreen-kill-screen tab-body)))
 	       :propertize (list 'face tab-face
 				 'pointer 'hand
-				 'navbarx-elscreen-screen screen))))
+				 'navbar-item-elscreen-screen screen))))
      screen-list)))
 
-(defun navbarx-elscreen-on ()
+(defun navbar-item-elscreen-on ()
   (if elscreen-frame-confs
-      (navbarx-elscreen--on)
-    (defadvice elscreen-start (after navbarx-elscreen-start activate)
-      (navbarx-elscreen--on))))
+      (navbar-item-elscreen--on)
+    (defadvice elscreen-start (after navbar-item-elscreen-start activate)
+      (navbar-item-elscreen--on))))
 
-(defun navbarx-elscreen--on ()
+(defun navbar-item-elscreen--on ()
   (remove-hook 'elscreen-screen-update-hook 'elscreen-tab-update)
-  (add-hook 'elscreen-screen-update-hook #'navbarx-elscreen-update)
+  (add-hook 'elscreen-screen-update-hook #'navbar-item-elscreen-update)
   ;; When `elscreen-start' is run after `navbar-mode' is enabled,
   ;; hook functions of `elscreen-screen-update-hook' have already run
-  ;; by `elscreen-make-frame-confs' before adding `navbarx-elscreen-update'
-  ;; to `elscreen-screen-update-hook' by `navbarx-elscreen-on',
-  ;; thus it is necessary to run `navbarx-elscreen-update' here.
+  ;; by `elscreen-make-frame-confs' before adding `navbar-item-elscreen-update'
+  ;; to `elscreen-screen-update-hook' by `navbar-item-elscreen-on',
+  ;; thus it is necessary to run `navbar-item-elscreen-update' here.
   ;;
-  ;; Moreover, successive call of `navbarx-elscreen-get' returns `unchanged'
+  ;; Moreover, successive call of `navbar-item-elscreen-get' returns `unchanged'
   ;; because of `elscreen-screen-modified-p', thus it is necessary to
   ;; get ElScreen tabs forcibly.
-  (navbarx-elscreen-update 'force))
+  (navbar-item-elscreen-update 'force))
 
-(defun navbarx-elscreen-off ()
+(defun navbar-item-elscreen-off ()
   (ignore-errors
-    (ad-remove-advice 'elscreen-start 'after 'navbarx-elscreen-start)
+    (ad-remove-advice 'elscreen-start 'after 'navbar-item-elscreen-start)
     (ad-update 'elscreen-start))
 
   (add-hook 'elscreen-screen-update-hook 'elscreen-tab-update)
-  (remove-hook 'elscreen-screen-update-hook #'navbarx-elscreen-update))
+  (remove-hook 'elscreen-screen-update-hook #'navbar-item-elscreen-update))
 
-;;;###autoload (autoload 'navbarx-elscreen "navbarx-elscreen")
-(navbar-define-item navbarx-elscreen
+;;;###autoload (autoload 'navbar-item-elscreen "navbar-item-elscreen")
+(navbar-define-item navbar-item-elscreen
   "Navbar item for ElScreen support."
   :enable t
-  :get #'navbarx-elscreen-get
-  :initialize #'navbarx-elscreen-on
-  :deinitialize #'navbarx-elscreen-off)
+  :get #'navbar-item-elscreen-get
+  :initialize #'navbar-item-elscreen-on
+  :deinitialize #'navbar-item-elscreen-off)
 
 (provide 'navbar-items)
 ;;; navbar-items.el ends here
