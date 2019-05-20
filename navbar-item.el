@@ -197,48 +197,45 @@ The following characters are replaced:
 	  (propertize " " 'display '(space :width 0))))
 
 (defun navbar-item-elscreen-get (&optional force)
-  (if (and (not (window-minibuffer-p))
-	   ;; The order is significant
-	   (or (elscreen-screen-modified-p 'navbar-item-elscreen-get)
-	       force))
-      (navbar-item-elscreen--get)
-    'unchanged))
-
-(defun navbar-item-elscreen--get ()
-  (let ((screen-list (sort (elscreen-get-screen-list) '<))
-	(screen-to-name-alist (elscreen-get-screen-to-name-alist))
-	(current-screen (elscreen-get-current-screen))
-	(previous-screen (elscreen-get-previous-screen))
-	deactivate-mark)
-    (mapcar
-     (lambda (screen)
-       (let* ((screen-name (cdr (assq screen screen-to-name-alist)))
-	      (tab-face (cond
-			 ((= screen current-screen)
-			  'elscreen-tab-current-screen-face)
-			 ((= screen previous-screen)
-			  'navbar-item-elscreen-tab-previous-screen)
-			 (t
-			  'elscreen-tab-other-screen-face)))
-	      (tab-body (list (format-spec navbar-item-elscreen-tab-body-format
-					   `((?s . ,screen)
-					     (?n . ,screen-name)))
-			      :truncate navbar-item-elscreen-tab-truncate
-			      :propertize
-			      (list 'help-echo screen-name
-				    'keymap navbar-item-elscreen-tab-body-map)
-			      :padding navbar-item-padding)))
-	 (list (cond
-		((not elscreen-tab-display-kill-screen)
-		 (list tab-body))
-		((eq elscreen-tab-display-kill-screen 'right)
-		 (list tab-body navbar-item-elscreen-kill-screen))
-		(t
-		 (list navbar-item-elscreen-kill-screen tab-body)))
-	       :propertize (list 'face tab-face
-				 'pointer 'hand
-				 'navbar-item-elscreen-screen screen))))
-     screen-list)))
+  (if (not (and (not (window-minibuffer-p))
+                ;; The order is significant
+                (or (elscreen-screen-modified-p 'navbar-item-elscreen-get)
+                    force)))
+      'unchanged
+    (let ((screen-list (sort (elscreen-get-screen-list) '<))
+          (screen-to-name-alist (elscreen-get-screen-to-name-alist))
+          (current-screen (elscreen-get-current-screen))
+          (previous-screen (elscreen-get-previous-screen))
+          deactivate-mark)
+      (mapcar
+       (lambda (screen)
+         (let* ((screen-name (cdr (assq screen screen-to-name-alist)))
+                (tab-face (cond
+                           ((= screen current-screen)
+                            'elscreen-tab-current-screen-face)
+                           ((= screen previous-screen)
+                            'navbar-item-elscreen-tab-previous-screen)
+                           (t
+                            'elscreen-tab-other-screen-face)))
+                (tab-body (list (format-spec navbar-item-elscreen-tab-body-format
+                                             `((?s . ,screen)
+                                               (?n . ,screen-name)))
+                                :truncate navbar-item-elscreen-tab-truncate
+                                :propertize
+                                (list 'help-echo screen-name
+                                      'keymap navbar-item-elscreen-tab-body-map)
+                                :padding navbar-item-padding)))
+           (list (cond
+                  ((not elscreen-tab-display-kill-screen)
+                   (list tab-body))
+                  ((eq elscreen-tab-display-kill-screen 'right)
+                   (list tab-body navbar-item-elscreen-kill-screen))
+                  (t
+                   (list navbar-item-elscreen-kill-screen tab-body)))
+                 :propertize (list 'face tab-face
+                                   'pointer 'hand
+                                   'navbar-item-elscreen-screen screen))))
+       screen-list))))
 
 (defun navbar-item-elscreen-on ()
   (remove-hook 'elscreen-screen-update-hook 'elscreen-tab-update)
