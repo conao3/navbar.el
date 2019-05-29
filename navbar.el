@@ -78,7 +78,8 @@ a buffer."
 (defface navbar-item
   '((t :foreground "#eee8d5" :background "#b58900"))
   "Default face of the navbar item."
-  :group 'navbar)
+  :group 'navbar
+  :set)
 
 (defconst navbar-font-lock-keywords
   '(("(\\(navbar-define-item\\)\\>\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)?"
@@ -383,8 +384,9 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 (defun navbar-sync ()
   "Reinitialize navbar items and refresh the navbar buffer."
   (interactive)
-  (navbar-initialize)
-  (navbar-update))
+  (when navbar-mode
+    (navbar-initialize)
+    (navbar-update)))
 
 ;;; GUI
 
@@ -508,7 +510,7 @@ Ref: 29.14 Child Frames
   (navbar-advices-remove)
   (remove-hook 'after-make-frame-functions #'navbar-update)
   (remove-hook 'after-make-frame-functions #'navbar-get-window)
-  (remove-hook 'window-size-change-functions #'navbar-update)
+  (remove-hook 'winDow-size-change-functions #'navbar-update)
   (mapc 'navbar-kill-buffer-and-window (navbar-frame-list))
   (font-lock-remove-keywords 'emacs-lisp-mode navbar-font-lock-keywords))
 
