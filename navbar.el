@@ -37,6 +37,12 @@
 
 ;;; Customization
 
+(defun navbar-custom-set-item-list (sym val)
+  "Set SYM as VAL and call `navbar-sync'."
+  (set-default sym val)
+  (when navbar-mode
+    (navbar-sync)))
+
 (defgroup navbar nil
   "Navigation bar for Emacs"
   :group 'environment)
@@ -47,7 +53,8 @@ It is necessary to run `navbar-sync' to reflect the change of this."
   :type '(repeat (choice (string :tag "Literal text")
 			 (plist :tag "Literal property list")
 			 (function :tag "Factory function")))
-  :group 'navbar)
+  :group 'navbar
+  :set #'navbar-custom-set-item-list)
 
 (defcustom navbar-item-separator
   (propertize " "
