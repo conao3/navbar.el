@@ -532,11 +532,5 @@ Ref: 29.14 Child Frames
        0 1 (revive:screen-width) (1- (revive:screen-height))
        edgelist))))
 
-;;; Navbar items
-
-(navbar-define-item navbarx-glue
-  "Navbar item for glue."
-  :value 'glue)
-
 (provide 'navbar)
 ;;; navbar.el ends here

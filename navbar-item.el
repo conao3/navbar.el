@@ -30,6 +30,13 @@
 (require 'mew)
 
 
+;;; Glue
+
+(navbar-define-item navbar-item-glue
+  "Navbar item for glue."
+  :value 'glue)
+
+
 ;;; version
 
 (defface navbar-item-version
