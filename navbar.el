@@ -37,15 +37,15 @@
 
 ;;; Customization
 
-(defun navbar-custom-set-item-list (sym val)
-  "Set SYM as VAL and call `navbar-sync'."
-  (set-default sym val)
-  (when navbar-mode
-    (navbar-sync)))
-
 (defgroup navbar nil
   "Navigation bar for Emacs"
   :group 'environment)
+
+(defun navbar-custom-set-item-list (sym val)
+  "Set SYM as VAL and call `navbar-sync'."
+  (set-default sym val)
+  (when (and (boundp 'navbar-mode) navbar-mode)
+    (navbar-sync)))
 
 (defcustom navbar-item-list nil
   "List of navbar items.
@@ -86,7 +86,7 @@ a buffer."
   '((t :foreground "#eee8d5" :background "#b58900"))
   "Default face of the navbar item."
   :group 'navbar
-  :set)
+  :set 'navbar-custom-set-item-list)
 
 (defconst navbar-font-lock-keywords
   '(("(\\(navbar-define-item\\)\\>\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)?"
