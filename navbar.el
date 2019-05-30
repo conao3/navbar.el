@@ -41,10 +41,11 @@
   "Navigation bar for Emacs"
   :group 'environment)
 
+(defvar navbar-init-frg nil)
 (defun navbar-custom-set-item-list (sym val)
   "Set SYM as VAL and call `navbar-sync'."
   (set-default sym val)
-  (when (and (boundp 'navbar-mode) navbar-mode)
+  (when navbar-init-frg
     (navbar-sync)))
 
 (defcustom navbar-item-list nil
@@ -391,9 +392,8 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
 (defun navbar-sync ()
   "Reinitialize navbar items and refresh the navbar buffer."
   (interactive)
-  (when navbar-mode
-    (navbar-initialize)
-    (navbar-update)))
+  (navbar-initialize)
+  (navbar-update))
 
 ;;; GUI
 
@@ -526,6 +526,7 @@ Ref: 29.14 Child Frames
 (define-minor-mode navbar-mode nil
   :group 'navbar
   :global t
+  (setq navbar-init-frg t)
   (if navbar-mode
       (navbar-setup)
     (navbar-teardown)))
