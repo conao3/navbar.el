@@ -27,7 +27,6 @@
 (require 'navbar)
 (require 'time)
 (require 'format-spec)
-(require 'mew)
 
 
 ;;; Glue
