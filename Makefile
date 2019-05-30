@@ -27,7 +27,7 @@ EXPECT_EMACS  += 26.1 26.2
 
 ALL_EMACS    := $(filter $(EMACS_RAW),$(EXPECT_EMACS:%=emacs-%))
 
-EMACS        ?= emacs
+EMACS        ?= emacs-26.2
 BATCH        := $(EMACS) -Q --batch -L $(TOP)
 
 DEPENDS      :=
