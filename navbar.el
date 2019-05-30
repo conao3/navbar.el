@@ -445,6 +445,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
       (set-window-display-table window navbar-display-table)
       (set-window-parameter window 'delete-window 'ignore)
       (set-window-parameter window 'no-other-window t)
+      (set-window-parameter window 'no-delete-other-windows t)
       (set-window-parameter window 'navbar-get-window t)
       window))
   (get-buffer-window (navbar-get-buffer-name frame) frame))
