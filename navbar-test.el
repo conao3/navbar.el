@@ -1,9 +1,7 @@
 ;;; navbar-test.el --- Tests for navbar.el           -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015  papaeye
-
-;; Author: papaeye <papaeye@gmail.com>
-;; Keywords: convenience
+;; Copyright (C) 2015       papaeye
+;; Copyright (C) 2018-2019  Naoya Yamashita
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

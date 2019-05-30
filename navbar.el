@@ -1,11 +1,14 @@
 ;;; navbar.el --- Navigation bar for Emacs           -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015  papaeye
+;; Copyright (C) 2015       papaeye
+;; Copyright (C) 2018-2019  Naoya Yamashita
 
 ;; Author: papaeye <papaeye@gmail.com>
+;; Maintainer: Naoya Yamashita <conao3@gmail.com>
+;; Maintainer: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: convenience
 ;; Version: 0.1.0
-;; Homepage: https://github.com/papaeye/emacs-navbar
+;; URL: https://github.com/conao3/navbar.el
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software: you can redistribute it and/or modify
