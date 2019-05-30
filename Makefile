@@ -3,10 +3,7 @@ EFLAGS ?= -Q -L . -L ./test
 
 CASK ?= cask
 
-ELS = navbar.el
-ELS += navbarx-elscreen.el
-ELS += navbarx-time.el
-ELS += navbarx-version.el
+ELS = navbar.el navbar-items.el
 ELCS = $(ELS:.el=.elc)
 
 .PHONY: compile
