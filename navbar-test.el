@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+(load "cort-test")
 (require 'navbar)
 
 ;; (defmacro navbar-test-save-buffer-list (&rest body)
