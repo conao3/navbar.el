@@ -54,11 +54,11 @@
 (defcustom navbar-item-list nil
   "List of navbar items.
 It is necessary to run `navbar-sync' to reflect the change of this."
+  :set #'navbar-custom-set-item-list
   :type '(repeat (choice (string :tag "Literal text")
 			 (plist :tag "Literal property list")
 			 (function :tag "Factory function")))
-  :group 'navbar
-  :set #'navbar-custom-set-item-list)
+  :group 'navbar)
 
 (defcustom navbar-item-separator
   (propertize " "
@@ -89,8 +89,7 @@ a buffer."
 (defface navbar-item
   '((t :foreground "#eee8d5" :background "#b58900"))
   "Default face of the navbar item."
-  :group 'navbar
-  :set 'navbar-custom-set-item-list)
+  :group 'navbar)
 
 (defconst navbar-font-lock-keywords
   '(("(\\(navbar-define-item\\)\\>\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)?"
