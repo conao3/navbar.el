@@ -1,24 +1,20 @@
+language: generic
+sudo: false
+
 env:
-  - EMACS=emacs EVM_EMACS=emacs-24.4-bin
-  - EMACS=emacs EVM_EMACS=emacs-24.5-bin
-  - EMACS=emacs-snapshot
-before_install:
-  - if [ -n "$EVM_EMACS" ]; then
-      sudo mkdir /usr/local/evm &&
-      sudo chown travis:travis /usr/local/evm &&
-      git clone --depth=1 https://github.com/rejeep/evm.git $HOME/.evm &&
-      export PATH=$HOME/.evm/bin:$PATH &&
-      evm install $EVM_EMACS &&
-      evm use $EVM_EMACS;
-    else
-      sudo add-apt-repository -y ppa:ubuntu-elisp/ppa &&
-      sudo apt-get -qq update &&
-      sudo apt-get -qq -f install &&
-      sudo apt-get -qq install $EMACS;
-    fi
-  - git clone --depth=1 https://github.com/cask/cask.git $HOME/.cask
-  - export PATH=$HOME/.cask/bin:$PATH
+  global:
+    - CURL="curl -fsSkL --retry 9 --retry-delay 9"
+  matrix:
+  - EMACS_VERSION=24.5
+  - EMACS_VERSION=25.3
+  - EMACS_VERSION=26.1
+  - EMACS_VERSION=master
+
 install:
-  - cask install
+  - $CURL -O https://github.com/npostavs/emacs-travis/releases/download/bins/emacs-bin-${EMACS_VERSION}.tar.gz
+  - tar xf emacs-bin-${EMACS_VERSION}.tar.gz -C /
+  - export EMACS=/tmp/emacs/bin/emacs
+
 script:
-  - make test-package
+  - make
+  - make check
