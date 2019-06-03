@@ -535,15 +535,15 @@ Ref: 29.14 Child Frames
 
 ;;; Workarounds
 
-(defun navbar-revive-workaround ()
-  (with-eval-after-load 'revive
-    (defun revive:window-list ()
-      (window-list nil 'no-minibuf (navbar-get-window)))
-    (defun construct-window-configuration (edgelist)
-      (delete-other-windows)
-      (revive:restore-winconf
-       0 1 (revive:screen-width) (1- (revive:screen-height))
-       edgelist))))
+;; (defun navbar-revive-workaround ()
+;;   (with-eval-after-load 'revive
+;;     (defun revive:window-list ()
+;;       (window-list nil 'no-minibuf (navbar-get-window)))
+;;     (defun construct-window-configuration (edgelist)
+;;       (delete-other-windows)
+;;       (revive:restore-winconf
+;;        0 1 (revive:screen-width) (1- (revive:screen-height))
+;;        edgelist))))
 
 (provide 'navbar)
 ;;; navbar.el ends here
