@@ -56,6 +56,7 @@
 
 ;; time.el, Emacs attached Elisp package
 (defvar display-time-string)
+(declare-function display-time-update "time")
 
 (defface navbar-item-time
   '((t :inherit navbar-item))
