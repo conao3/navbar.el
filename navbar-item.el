@@ -90,6 +90,10 @@
 
 ;;; mew
 
+;; mew.el
+(defvar mew-biff-string)
+(defvar mew-biff-function)
+
 (defface navbar-item-mew
   '((t :inherit navbar-item))
   "Face of `navbar-item-mew'."
