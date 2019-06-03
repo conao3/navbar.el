@@ -45,6 +45,7 @@
   :group 'environment)
 
 (defvar navbar-init-frg nil)
+
 (defun navbar-custom-set-item-list (sym val)
   "Set SYM as VAL and call `navbar-sync'."
   (set-default sym val)
@@ -98,13 +99,12 @@ a buffer."
 
 ;;; Polyfills
 
-(unless (fboundp 'delete-side-window)
-  (defun delete-side-window (window)
-    "Delete side window WINDOW."
-    (let ((window-combination-resize
-           (window-parameter (window-parent window) 'window-side))
-          (ignore-window-parameters t))
-      (delete-window window))))
+(defun navbar-delete-side-window (window)
+  "Delete side window WINDOW.  Polyfill of `delete-side-window'."
+  (let ((window-combination-resize
+         (window-parameter (window-parent window) 'window-side))
+        (ignore-window-parameters t))
+    (delete-window window)))
 
 (defun navbar-property-at (point prop window)
   (with-selected-window window
@@ -458,7 +458,7 @@ Also, this runs :deinitialize functions without updating the navbar buffer."
   (let ((window (navbar-get-window frame))
 	(buffer (navbar-get-buffer frame)))
     (when window
-      (delete-side-window window))
+      (navbar-delete-side-window window))
     (when buffer
       (kill-buffer buffer))))
 
