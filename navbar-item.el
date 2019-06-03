@@ -147,6 +147,10 @@
 ;; * `elscreen-tab-other-screen-face'
 ;; * `elscreen-tab-display-kill-screen'
 
+;; format-spec.el; Emacs attached package
+(declare-function format-spec "format-spec")
+
+;; elscreen.el
 (defvar elscreen-tab-display-kill-screen)
 (declare-function elscreen-kill "elscreen")
 (declare-function elscreen-kill-screen-and-buffers "elscreen")
