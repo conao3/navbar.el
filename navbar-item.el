@@ -54,7 +54,7 @@
 ;; This navbar item displays `display-time-string' in the navbar buffer
 ;; instead of the mode line.
 
-;; time.el, Emacs attached Elisp package
+;; time.el; Emacs attached Elisp package
 (defvar display-time-string)
 (declare-function display-time-update "time")
 
