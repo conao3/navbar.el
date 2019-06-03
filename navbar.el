@@ -82,6 +82,11 @@ a buffer."
   :type 'function
   :group 'navbar)
 
+(defcustom navbar-lighter " nav"
+  "The `navbar-mode' lighter."
+  :type 'string
+  :group 'navbar)
+
 (defface navbar
   '((t :inherit fringe))
   "Face of the navbar buffer."
@@ -526,8 +531,9 @@ Ref: 29.14 Child Frames
 
 ;;;###autoload
 (define-minor-mode navbar-mode nil
-  :group 'navbar
   :global t
+  :group 'navbar
+  :lighter navbar-lighter
   (setq navbar-init-frg t)
   (if navbar-mode
       (navbar-setup)
