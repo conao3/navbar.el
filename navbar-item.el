@@ -54,6 +54,9 @@
 ;; This navbar item displays `display-time-string' in the navbar buffer
 ;; instead of the mode line.
 
+;; time.el, Emacs attached Elisp package
+(defvar display-time-string)
+
 (defface navbar-item-time
   '((t :inherit navbar-item))
   "Face of `navbar-item-time'."
