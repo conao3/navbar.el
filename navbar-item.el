@@ -25,6 +25,7 @@
 ;;; Code:
 
 (require 'navbar)
+(require 'format-spec)
 
 
 ;;; Glue
