@@ -2,6 +2,7 @@
 
 ;; Copyright (C) 2015       papaeye
 ;; Copyright (C) 2018-2019  Naoya Yamashita
+;; Copyright (C) 2019       ROCKTAKEY
 
 ;; Author: papaeye <papaeye@gmail.com>
 ;; Maintainer: Naoya Yamashita <conao3@gmail.com>
