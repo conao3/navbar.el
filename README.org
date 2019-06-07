@@ -34,10 +34,14 @@ navbar.el can contain various components called navbar items.
 
 * How to use?
 
-* Develop Team
+* Author
+- papaeye ([[https://github.com/papaeye/emacs-navbar][papaeye]])
+
+* Maintainers
 - Naoya Yamashita ([[https://github.com/conao3/navbar.el/network][conao3]])
 - ROCKTAKEY ([[https://github.com/ROCKTAKEY][ROCKTAKEY]])
-- papaeye ([[https://github.com/papaeye/emacs-navbar][papaeye]])
+
+* Contributors
 
 * Welcome PR
 We welcome PR!
@@ -46,6 +50,7 @@ Travis Cl test ~navbar.el~ with all Emacs version 24 or above.
 I think that it is difficult to prepare the environment locally, 
 so I think that it is good to throw PR and test Travis for the time being!
 Feel free throw PR!
+
 
 * Special Thanks
 Advice and comments given by [[http://emacs-jp.github.io/][Emacs-JP]]'s forum member has been a great help
