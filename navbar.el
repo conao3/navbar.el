@@ -488,7 +488,7 @@ Ref: 29.14 Child Frames
 (defun navbar-advice-next-window (fn &rest args)
   (let* ((ret (apply fn args)))
     (while (string-match " \\*navbar " (buffer-name (window-buffer ret)))
-      (setq ret (apply fn `(elm (nth 1 args) (nth 2 args)))))
+      (setq ret (apply fn `(,ret ,(nth 1 args) ,(nth 2 args)))))
     ret))
 
 (defun navbar-advice-window-list (fn &rest args)
