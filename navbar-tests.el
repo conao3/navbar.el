@@ -717,5 +717,5 @@
 ;; 			elscreen-screen-update-hook))
 ;;       (should-not (navbar-item-value-get 'navbarx-elscreen)))))
 
-(provide 'navbar-test)
+;; (provide 'navbar-test)
 ;;; navbar-test.el ends here
