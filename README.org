@@ -1,59 +1,102 @@
-#+author: conao
-#+date: <2018-10-25 Thu>
+#+title: navbar.el
+#+author: conao3
 
 [[https://github.com/conao3/navbar.el][https://raw.githubusercontent.com/conao3/files/master/blob/headers/png/navbar.el.png]]
+
 [[https://github.com/conao3/navbar.el/blob/master/LICENSE][https://img.shields.io/github/license/conao3/navbar.el.svg?style=flat-square]]
 [[https://github.com/conao3/navbar.el/releases][https://img.shields.io/github/tag/conao3/navbar.el.svg?style=flat-square]]
-[[https://travis-ci.org/conao3/navbar.el][https://img.shields.io/travis/conao3/navbar.el/master.svg?style=flat-square]]
-[[https://app.codacy.com/project/conao3/navbar.el/dashboard][https://img.shields.io/codacy/grade/f3c354d1a8ba4227acec9ec7efc4c05a.svg?logo=codacy&style=flat-square]]
-[[https://www.patreon.com/conao3][https://img.shields.io/badge/patreon-become%20a%20patron-orange.svg?logo=patreon&style=flat-square]]
-[[https://twitter.com/conao_3][https://img.shields.io/badge/twitter-@conao__3-blue.svg?logo=twitter&style=flat-square]]
-[[https://join.slack.com/t/conao3-support/shared_invite/enQtNjUzMDMxODcyMjE1LTA4ZGRmOWYwZWE3NmE5NTkyZjk3M2JhYzU2ZmRkMzdiMDdlYTQ0ODMyM2ExOGY0OTkzMzZiMTNmZjJjY2I5NTM][https://img.shields.io/badge/chat-on_slack-blue.svg?logo=slack&style=flat-square]]
+[[https://melpa.org/#/navbar][https://melpa.org/packages/navbar-badge.svg]]
 
+A navigation bar for Emacs, inspired by [[http://getbootstrap.com/][Bootstrap's]] navbar component.
 
-- [[#what-is-it][What is it?]]
-- [[#how-to-use][How to use?]]
-- [[#welcome-pr][Welcome PR]]
-- [[#special-thanks][Special Thanks]]
+* Overview
 
-* What is it?
-~navbar.el~ is yet another [[https://github.com/papaeye/emacs-navbar][emacs-navbar]].
+navbar.el provides a customizable navigation bar that sits at the top of your Emacs frame. Like Bootstrap's navbar, it supports various components called "navbar items" that can display dynamic content such as time, buffer information, or workspace tabs.
 
-navbar.el is a navigation bar for Emacs.
-Just like the navbar component of [[http://getbootstrap.com/][Bootstrap]],
-navbar.el can contain various components called navbar items.
+** Screenshots
 
-1. This is the "Hello, world!" example:
-   [[#!][./images/hello_world.png]]
+Hello World example:
+[[./images/hello_world.png]]
 
-2. The element of `navbar-item-list` may be a function which returns a property list.  To reflect the change of `navbar-item-list`, run `navbar-sync`.  `navbarx-time` displays `display-time-string` in the navbar buffer instead of the mode line:
-   [[#!][./images/navbarx_time.png]]
+Time display with =navbarx-time=:
+[[./images/navbarx_time.png]]
 
-3. `navbarx-elscreen` displays ElScreen tabs in the navbar buffer instead of the header line:
-   [[#!][./images/navbarx_elscreen.png]]
+ElScreen tabs with =navbarx-elscreen=:
+[[./images/navbarx_elscreen.png]]
 
-* How to use?
+* Requirements
 
-* Author
-- papaeye ([[https://github.com/papaeye/emacs-navbar][papaeye]])
+- Emacs 24.4 or later
 
-* Maintainers
-- Naoya Yamashita ([[https://github.com/conao3/navbar.el/network][conao3]])
+* Installation
+
+** From MELPA
+
+#+begin_src emacs-lisp
+(use-package navbar
+  :ensure t
+  :config
+  (navbar-mode 1))
+#+end_src
+
+** Manual Installation
+
+Clone this repository and add it to your load path:
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/path/to/navbar.el")
+(require 'navbar)
+(navbar-mode 1)
+#+end_src
+
+* Usage
+
+** Basic Configuration
+
+Define navbar items and enable the mode:
+
+#+begin_src emacs-lisp
+(setq navbar-item-list '("Hello, world!"))
+(navbar-mode 1)
+#+end_src
+
+** Dynamic Items
+
+Navbar items can be functions that return property lists. Use =navbar-sync= to refresh the display after modifying =navbar-item-list=.
+
+The =navbarx-time= item displays the current time in the navbar instead of the mode line:
+
+#+begin_src emacs-lisp
+(require 'navbarx-time)
+(setq navbar-item-list '(navbarx-time))
+(navbar-mode 1)
+#+end_src
+
+The =navbarx-elscreen= item displays ElScreen tabs in the navbar instead of the header line:
+
+#+begin_src emacs-lisp
+(require 'navbarx-elscreen)
+(setq navbar-item-list '(navbarx-elscreen))
+(navbar-mode 1)
+#+end_src
+
+** Customization
+
+Use =M-x customize-group RET navbar RET= to explore available customization options.
+
+* Contributing
+
+Contributions are welcome. Please feel free to submit issues and pull requests.
+
+* Credits
+
+** Original Author
+- papaeye ([[https://github.com/papaeye/emacs-navbar][GitHub]])
+
+** Maintainers
+- Naoya Yamashita ([[https://github.com/conao3][conao3]])
 - ROCKTAKEY ([[https://github.com/ROCKTAKEY][ROCKTAKEY]])
 
-* Contributors
+* License
 
-* Welcome PR
-We welcome PR!
-Travis Cl test ~navbar.el~ with all Emacs version 24 or above.
-
-I think that it is difficult to prepare the environment locally, 
-so I think that it is good to throw PR and test Travis for the time being!
-Feel free throw PR!
-
-
-* Special Thanks
-Advice and comments given by [[http://emacs-jp.github.io/][Emacs-JP]]'s forum member has been a great help
-in developing ~navbar.el~.
-
-Thank you very much!!
+This project is licensed under the AGPL-3.0. See the [[file:LICENSE][LICENSE]] file for details.
